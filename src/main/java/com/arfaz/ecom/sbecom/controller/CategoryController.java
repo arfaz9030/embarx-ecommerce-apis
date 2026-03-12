@@ -1,6 +1,6 @@
 package com.arfaz.ecom.sbecom.controller;
 
-import com.arfaz.ecom.sbecom.model.Category;
+import com.arfaz.ecom.sbecom.config.AppConstants;
 import com.arfaz.ecom.sbecom.payloads.CategoryDTO;
 import com.arfaz.ecom.sbecom.payloads.CategoryResponse;
 import com.arfaz.ecom.sbecom.service.CategoryService;
@@ -9,10 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @RestController
 //If I have Observe the below endpoints previously /api is common for endpoints so I can use
@@ -41,9 +37,11 @@ public class CategoryController {
     //we can write as getmapping
     // @RequestMapping(value = "/public/categories", method = RequestMethod.GET)
     @GetMapping("/public/categories")
-    public ResponseEntity<CategoryResponse> getAllCategories(@RequestParam(name = "pageNumber") Integer pageNumber,
-                                                             @RequestParam(name = "pageSize") Integer pageSize) {
-        CategoryResponse categories = categoryService.getAllCategories(pageNumber, pageSize);
+    public ResponseEntity<CategoryResponse> getAllCategories(@RequestParam(name = "pageNumber", defaultValue = AppConstants.PAGE_NUMBER, required=false) Integer pageNumber,
+                                                             @RequestParam(name = "pageSize",defaultValue = AppConstants.PAGE_SIZE, required=false) Integer pageSize,
+                                                             @RequestParam(name = "sortBy", defaultValue = AppConstants.SORT_BY_CATEGORIES, required = false) String sortBy,
+                                                             @RequestParam(name = "sortOrder", defaultValue = AppConstants.SORT_BY_DIR, required = false) String sortOrder) {
+        CategoryResponse categories = categoryService.getAllCategories(pageNumber, pageSize,sortBy,sortOrder);
             return new ResponseEntity<>(categories, HttpStatus.OK);
     }
 

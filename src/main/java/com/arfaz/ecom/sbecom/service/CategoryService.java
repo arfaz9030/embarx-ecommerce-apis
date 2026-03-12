@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface CategoryService {
-    CategoryResponse getAllCategories(Integer  pageNumber, Integer pageSize);
+    CategoryResponse getAllCategories(Integer  pageNumber, Integer pageSize, String sortBy, String sortOrder);
     CategoryDTO addCategory(@RequestBody CategoryDTO categoryDTO);
     CategoryDTO deleteCategory(@PathVariable Long categoryId);
     CategoryDTO updateCategoryById(Long categoryId, CategoryDTO categoryDTO);

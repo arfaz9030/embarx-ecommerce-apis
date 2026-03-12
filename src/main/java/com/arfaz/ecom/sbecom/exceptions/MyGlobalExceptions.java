@@ -1,5 +1,6 @@
 package com.arfaz.ecom.sbecom.exceptions;
 
+import com.arfaz.ecom.sbecom.config.APIResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -26,15 +27,17 @@ public class MyGlobalExceptions {
         return new ResponseEntity<>(errorsRes,  HttpStatus.BAD_REQUEST);
     }
     @ExceptionHandler(value = ResourceNotFoundException.class)
-    public ResponseEntity<String> myResourceNotFound(ResourceNotFoundException e) {
+    public ResponseEntity<APIResponse> myResourceNotFound(ResourceNotFoundException e) {
         String errorMessage = e.getMessage(); // inbuit method of RuntimeException
         // where ResourceNotFoundException extends RuntimeException and passes message super()
-        return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
+        APIResponse apiResponse = new APIResponse(errorMessage, false);
+            return new ResponseEntity<>(apiResponse, HttpStatus.NOT_FOUND);
     }
     @ExceptionHandler(value = APIException.class)
-    public ResponseEntity<String> myAPIException(APIException e) {
+    public ResponseEntity<APIResponse> myAPIException(APIException e) {
         String errorMessage = e.getMessage(); // inbuit method of RuntimeException
         // where APIException extends RuntimeException and passes message super()
-        return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
+        APIResponse apiResponse = new APIResponse(errorMessage, false);
+        return new ResponseEntity<>(apiResponse, HttpStatus.BAD_REQUEST);
     }
 }

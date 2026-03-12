@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -33,16 +34,25 @@ public class CategoryServiceImpl implements CategoryService {
     private ModelMapper modelMapper;
 
     @Override
-    public CategoryResponse getAllCategories(Integer pageNumber, Integer pageSize) {
+    public CategoryResponse getAllCategories(Integer pageNumber, Integer pageSize,String sortBy,String sortOrder) {
 //before findAll() we used to return categories List not Jpa
         // Fetch all categories from database using JPA repository
 // Internally, findAll() executes a SELECT * query
 
+        // Create Sort object based on client input (asc or desc)
+        Sort sortByAndOrder = sortOrder.equalsIgnoreCase("asc")
+
+                // If user passes "asc" → sort in ascending order (A-Z, 1-10)
+                ? Sort.by(sortBy).ascending()
+
+                // Otherwise → sort in descending order (Z-A, 10-1)
+                : Sort.by(sortBy).descending();
 // Create a Pageable object using PageRequest
 // PageRequest.of(pageNumber, pageSize) is a STATIC FACTORY METHOD
 // pageNumber → which page to fetch (starts from 0)
 // pageSize → number of records per page
-        Pageable pageDetails = PageRequest.of(pageNumber, pageSize);
+
+        Pageable pageDetails = PageRequest.of(pageNumber, pageSize, sortByAndOrder);
 
 
 // Call repository method to fetch paginated result
