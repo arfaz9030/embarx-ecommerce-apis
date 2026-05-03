@@ -22,7 +22,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     private List<Category> categories = new ArrayList<>();
 //    private Long nextId = 1L;
-// before creating nextId user supposed to give in reqst-body it's not realistic
+// before creating nextId user supposed to provide id in reqst-body it's not realistic
 //    so created nextId n passes setId()
 //    we are removing nextId because we are generating automatically using
 //    Jpa annotation Id, Generated
@@ -35,7 +35,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public CategoryResponse getAllCategories(Integer pageNumber, Integer pageSize,String sortBy,String sortOrder) {
-//before findAll() we used to return categories List not Jpa
+//before using findAll() we used to return categories List not Jpa
         // Fetch all categories from database using JPA repository
 // Internally, findAll() executes a SELECT * query
 

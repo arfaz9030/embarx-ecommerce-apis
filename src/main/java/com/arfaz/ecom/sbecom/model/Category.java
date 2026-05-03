@@ -19,7 +19,7 @@ public class Category {
     // here we get default message as category must min 5 if we enter one char so we'll customize
     private String categoryName;
 
-    //if we want to test we comment below getter, setter then jpa will give null value to the respective fields
+    //If we want to test we comment below getter, setter then jpa will give null value to the respective fields
     public Long getCategoryId() {
         return categoryId;
     }
